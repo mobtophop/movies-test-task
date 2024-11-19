@@ -69,4 +69,24 @@ dependencies {
 
     // GSON
     implementation(libs.gson)
+
+    // Navigation
+    implementation(libs.androidx.navigation.compose)
+
+    // Dependency Injection
+    runtimeOnly(libs.hilt.android)
+
+    // Network
+    implementation(libs.okhttp)
+    implementation(libs.retrofit)
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.retrofit2.kotlinx.serialization.converter)
+    api(libs.logginginterceptor)
+
+    // Paging 3
+    implementation ( libs.androidx.paging.runtime.ktx)
+    implementation (libs.androidx.paging.compose)
+
+    // Async
+    implementation(libs.coil.compose)
 }
