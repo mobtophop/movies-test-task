@@ -13,36 +13,18 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.moviestesttask.presentation.ui.common.MovieCardComposable
 import com.example.moviestesttask.presentation.ui.common.NavAppBap
 import com.example.moviestesttask.view_model.ViewModelAllMovies
 
-//val mockData = MovieData(
-//	adult = false,
-//	backdropPath = "/3V4kLQg0kSqPLctI5ziYWabAZYF.jpg",
-//	genreIds = arrayListOf(878, 28, 12),
-//	id = 912649,
-//	originalLanguage = "en",
-//	originalTitle = "Venom: The Last Dance",
-//	overview = "Eddie and Venom are on the run. Hunted by both of their worlds and with the net closing in, the duo are forced into a devastating decision that will bring the curtains down on Venom and Eddie's last dance.",
-//	popularity = 4301.968F,
-//	posterPath = "/aosm8NMQ3UyoBVpSxyimorCQykC.jpg",
-//	releaseDate = "2024-10-22",
-//	title = "Venom: The Last Dance",
-//	video = false,
-//	voteAverage = 6.43F,
-//	voteCount = 732
-//)
-
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ScreenAllMovies(
 	navController: NavController,
-	viewModel: ViewModelAllMovies,
+	viewModel: ViewModelAllMovies = hiltViewModel<ViewModelAllMovies>(),
 ) {
 	Scaffold(
 		topBar = {

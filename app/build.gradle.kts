@@ -77,6 +77,7 @@ dependencies {
 
     // Dependency Injection
     implementation(libs.hilt.android.v2511)
+    implementation(libs.androidx.hilt.navigation.compose)
     kapt(libs.hilt.compiler)
 
     // Network
