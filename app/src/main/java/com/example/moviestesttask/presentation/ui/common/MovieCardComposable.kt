@@ -1,6 +1,5 @@
 package com.example.moviestesttask.presentation.ui.common
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,19 +14,18 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.BlendMode
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.example.moviestesttask.R
 import com.example.moviestesttask.model.MovieData
-import com.example.moviestesttask.presentation.theme.White
 import java.util.Locale
 
 @Composable
@@ -37,9 +35,6 @@ fun MovieCardComposable(movieData: MovieData) {
         modifier = Modifier
             .padding(16.dp)
             .fillMaxWidth(),
-        colors = CardDefaults.cardColors(
-            containerColor = White,
-        ),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
     ) {
         Column(
@@ -54,13 +49,19 @@ fun MovieCardComposable(movieData: MovieData) {
             Row {
                 Column(
                     horizontalAlignment = Alignment.Start,
-                ) {
-                    Image(
-                        imageVector = ImageVector.vectorResource(id = R.drawable.no_photo),
-                        contentDescription = "${movieData.title} poster",
-                        modifier = Modifier.size(48.dp),
-                        colorFilter = ColorFilter.tint(Color.Cyan, BlendMode.Darken)
-                    )
+					) {
+
+					AsyncImage(
+						model = ImageRequest.Builder(LocalContext.current)
+							.data("https://image.tmdb.org/t/p/w500${movieData.posterPath}")
+							.fallback(R.drawable.no_photo)
+							.crossfade(true)
+							.build(),
+						placeholder = painterResource(R.drawable.ic_launcher_foreground),
+						contentDescription = "",
+						contentScale = ContentScale.Crop,
+						modifier = Modifier.size(48.dp),
+					)
 
                     Text(
                         String.format(Locale.getDefault(), "%.1f", movieData.voteAverage),

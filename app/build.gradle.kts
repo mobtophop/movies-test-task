@@ -1,6 +1,11 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("kotlin-parcelize")
+    id ("kotlin-kapt")
+    id ("com.google.dagger.hilt.android")
+    kotlin("plugin.serialization") version "2.0.21"
+    id("org.jetbrains.kotlin.plugin.compose") version "2.1.0-RC2"
 }
 
 android {
@@ -58,8 +63,8 @@ dependencies {
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
-    testImplementation(libs.junit)
+	implementation(libs.androidx.material3.android)
+	testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
@@ -67,26 +72,28 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    // GSON
-    implementation(libs.gson)
-
     // Navigation
     implementation(libs.androidx.navigation.compose)
 
     // Dependency Injection
-    runtimeOnly(libs.hilt.android)
+    implementation(libs.hilt.android.v2511)
+    kapt(libs.hilt.compiler)
 
     // Network
     implementation(libs.okhttp)
     implementation(libs.retrofit)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.retrofit2.kotlinx.serialization.converter)
-    api(libs.logginginterceptor)
+    implementation(libs.logging.interceptor)
 
     // Paging 3
-    implementation ( libs.androidx.paging.runtime.ktx)
-    implementation (libs.androidx.paging.compose)
+    implementation(libs.androidx.paging.runtime.ktx)
+    implementation(libs.androidx.paging.compose)
 
     // Async
     implementation(libs.coil.compose)
+}
+
+kapt {
+    correctErrorTypes = true
 }

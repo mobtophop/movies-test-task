@@ -10,7 +10,6 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.example.moviestesttask.presentation.ui.common.MovieCardComposable
 import com.example.moviestesttask.presentation.ui.common.NavAppBap
-import com.example.moviestesttask.presentation.ui.screens.all.mockData
 
 @Composable
 fun ScreenFavorites(navController: NavController) {
@@ -24,8 +23,8 @@ fun ScreenFavorites(navController: NavController) {
                 .padding(innerPadding)
                 .verticalScroll(ScrollState(0)),
         ) {
-            MovieCardComposable(movieData = mockData)
-            MovieCardComposable(movieData = mockData)
+//            MovieCardComposable(movieData = mockData)
+//            MovieCardComposable(movieData = mockData)
         }
     }
 }
