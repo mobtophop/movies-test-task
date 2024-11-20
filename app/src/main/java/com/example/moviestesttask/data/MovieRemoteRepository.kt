@@ -2,7 +2,6 @@ package com.example.moviestesttask.data
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import dagger.hilt.android.scopes.ActivityRetainedScoped
 import javax.inject.Inject
 
 class MovieRemoteRepository @Inject constructor(private val remoteDataSource: RemoteDataSource) {
@@ -12,6 +11,7 @@ class MovieRemoteRepository @Inject constructor(private val remoteDataSource: Re
 				20,
 				enablePlaceholders = false
 			),
-			pagingSourceFactory = { TmdbDataSource(remoteDataSource) }
+			pagingSourceFactory = { TmdbDataSource(remoteDataSource) },
+			initialKey = 1,
 		).flow
 }

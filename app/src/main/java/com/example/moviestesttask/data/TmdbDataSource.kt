@@ -27,7 +27,7 @@ class TmdbDataSource(
 
 		return try {
 			val pageNumber = params.key ?: 1
-			val prevKey = if (pageNumber > 0) pageNumber - 1 else null
+			val prevKey = if (pageNumber > 1) pageNumber - 1 else null
 
 			val result: List<MovieResponseData>? = tmdbApiService.getLatestMovies(
 				page = "$pageNumber",
