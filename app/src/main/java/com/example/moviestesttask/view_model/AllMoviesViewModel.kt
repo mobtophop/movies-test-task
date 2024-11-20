@@ -7,6 +7,7 @@ import androidx.paging.cachedIn
 import com.example.moviestesttask.model.MovieData
 import com.example.moviestesttask.use_case.MoviesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,14 +16,14 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ViewModelAllMovies @Inject constructor(
+class AllMoviesViewModel @Inject constructor(
 	private val moviesUseCase: MoviesUseCase
 ) : ViewModel() {
 
 	private val _isRefreshing = MutableStateFlow(false)
 	val isRefreshing = _isRefreshing.asStateFlow()
-	private val _movies: MutableStateFlow<PagingData<MovieData>> =
-		MutableStateFlow(PagingData.empty())
+
+	private val _movies = MutableStateFlow<PagingData<MovieData>>(PagingData.empty())
 	var movies = _movies.asStateFlow()
 		private set
 
@@ -37,7 +38,7 @@ class ViewModelAllMovies @Inject constructor(
 
 	fun refresh() {
 		_isRefreshing.tryEmit(true)
-		viewModelScope.launch {
+		viewModelScope.launch(Dispatchers.IO) {
 			moviesUseCase.getLatestMovies().cachedIn(viewModelScope).collectLatest {
 				_movies.value = it
 				delay(300)

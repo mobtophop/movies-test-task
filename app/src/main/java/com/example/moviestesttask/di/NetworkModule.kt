@@ -1,15 +1,14 @@
-@file:OptIn(ExperimentalSerializationApi::class)
-
 package com.example.moviestesttask.di
 
+import com.example.moviestesttask.BuildConfig
 import com.example.moviestesttask.api.TmdbApiService
-import com.example.moviestesttask.misc.asConverterFactory
+import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
+import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -22,19 +21,30 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
-	private const val BASE_URL = "https://api.themoviedb.org/3/"
-
 	@Singleton
 	@Provides
-	fun provideHttpClient(): OkHttpClient {
-		val logging = HttpLoggingInterceptor()
-		logging.setLevel(HttpLoggingInterceptor.Level.BODY)
+	fun provideHttpClient(loggingInterceptor: HttpLoggingInterceptor, requestInterceptor: Interceptor): OkHttpClient {
 		return OkHttpClient
 			.Builder()
-			.addInterceptor(logging)
+			.addInterceptor(loggingInterceptor)
+			.addInterceptor(requestInterceptor)
 			.readTimeout(60, TimeUnit.SECONDS)
 			.connectTimeout(60, TimeUnit.SECONDS)
 			.build()
+	}
+
+	@Provides
+	internal fun loggingInterceptor(): HttpLoggingInterceptor {
+		return HttpLoggingInterceptor().apply {
+			setLevel(HttpLoggingInterceptor.Level.BODY)
+		}
+	}
+
+	@Provides
+	fun provideRequestInterceptor() = Interceptor {
+		val builder = it.request().newBuilder().url(it.request().url)
+		builder.header("Authorization", "Bearer ${BuildConfig.MOVIE_TOKEN}")
+		it.proceed(builder.build())
 	}
 
 	@Singleton
@@ -43,7 +53,7 @@ object NetworkModule {
 		okHttpClient: OkHttpClient,
 	): Retrofit {
 		return Retrofit.Builder()
-			.baseUrl(BASE_URL)
+			.baseUrl(BuildConfig.ENDPOINT)
 			.client(okHttpClient)
 			.addConverterFactory(json.asConverterFactory("application/json".toMediaTypeOrNull()!!))
 			.build()

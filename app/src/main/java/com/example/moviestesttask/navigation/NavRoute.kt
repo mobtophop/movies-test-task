@@ -1,9 +1,7 @@
 package com.example.moviestesttask.navigation
 
 sealed class NavRoute(val route: String) {
-    data object AllMoviesScreen : NavRoute(ALL_MOVIES_ROUTE)
-    data object FavoritesScreen : NavRoute(FAVORITES_ROUTE)
+    data object MainScreen: NavRoute(MAIN_SCREEN)
 }
 
-private const val ALL_MOVIES_ROUTE = "all movies screen"
-private const val FAVORITES_ROUTE = "favorites screen"
+private const val MAIN_SCREEN = "main screen"

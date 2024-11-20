@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">MoviesTestTask</string>
+    <string name="all">All</string>
+    <string name="favorites">Favorites</string>
+    <string name="like">Like</string>
+    <string name="share">Share</string>
+    <string name="back">Back\n</string>
 </resources>

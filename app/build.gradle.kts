@@ -8,6 +8,11 @@ plugins {
     id("org.jetbrains.kotlin.plugin.compose") version "2.1.0-RC2"
 }
 
+private val API_ENDPOINT = "ENDPOINT"
+private val MOVIE_TOKEN = "MOVIE_TOKEN"
+private val apiEndpoint = "\"https://api.themoviedb.org/3/\""
+private val apiToken = "\"eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5MjZhMjE1MDA1NTg3NzkzYTE5NzQ4ZGMxZDFkMzQ1YSIsIm5iZiI6MTczMTk4NDc1OS43ODA3ODQ0LCJzdWIiOiI2NzNhYWEwNDljMTZkYWZhMDZmOWUxOWYiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.tnDZx_xC18FUOM0rUgI3GaBA-qRbRPquq6u-bcm_8RI\""
+
 android {
     namespace = "com.example.moviestesttask"
     compileSdk = 35
@@ -32,6 +37,12 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("String", API_ENDPOINT, apiEndpoint)
+            buildConfigField("String", MOVIE_TOKEN, apiToken)
+        }
+        debug {
+            buildConfigField("String", API_ENDPOINT, apiEndpoint)
+            buildConfigField("String", MOVIE_TOKEN, apiToken)
         }
     }
     compileOptions {
@@ -43,6 +54,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
@@ -93,6 +105,10 @@ dependencies {
 
     // Async
     implementation(libs.coil.compose)
+
+    // Room
+    implementation(libs.androidx.room.runtime)
+    annotationProcessor(libs.androidx.room.compiler)
 }
 
 kapt {
