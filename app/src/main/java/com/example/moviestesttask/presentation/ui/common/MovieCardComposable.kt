@@ -1,5 +1,6 @@
 package com.example.moviestesttask.presentation.ui.common
 
+import android.content.Intent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -116,7 +117,27 @@ fun MovieCardComposable(
                     Text(text = stringResource(if (isFavorite) R.string.dislike else R.string.like))
                 }
 
-                TextButton(onClick = { /*TODO*/ }) {
+                val context = LocalContext.current
+                TextButton(onClick = {
+                    val sendIntent: Intent = Intent().apply {
+                        action = Intent.ACTION_SEND
+
+                        putExtra(
+                            Intent.EXTRA_TEXT,
+                            "Check out this movie! ${
+                                String.format(
+                                    Locale.getDefault(),
+                                    "%.1f",
+                                    movieData.voteAverage,
+                                )
+                            }★ ${movieData.title}",
+                        )
+                        type = "text/plain"
+                    }
+
+                    val shareIntent = Intent.createChooser(sendIntent, null)
+                    context.startActivity(shareIntent)
+                }) {
                     Text(text = stringResource(R.string.share))
                 }
             }
