@@ -30,11 +30,16 @@ import com.example.moviestesttask.model.MovieData
 import java.util.Locale
 
 @Composable
-fun MovieCardComposable(movieData: MovieData) {
+fun MovieCardComposable(
+    movieData: MovieData,
+    isFavorite: Boolean = false,
+    likeButtonCallback: () -> Unit,
+    dislikeButtonCallback: () -> Unit,
+) {
 
     Card(
         modifier = Modifier
-            .padding(16.dp)
+            .padding(horizontal = 16.dp, vertical = 8.dp)
             .fillMaxWidth(),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
     ) {
@@ -50,19 +55,19 @@ fun MovieCardComposable(movieData: MovieData) {
             Row {
                 Column(
                     horizontalAlignment = Alignment.Start,
-					) {
+                ) {
 
-					AsyncImage(
-						model = ImageRequest.Builder(LocalContext.current)
-							.data("https://image.tmdb.org/t/p/w500${movieData.posterPath}")
-							.fallback(R.drawable.no_photo)
-							.crossfade(true)
-							.build(),
-						placeholder = painterResource(R.drawable.ic_launcher_foreground),
-						contentDescription = "",
-						contentScale = ContentScale.Crop,
-						modifier = Modifier.size(48.dp),
-					)
+                    AsyncImage(
+                        model = ImageRequest.Builder(LocalContext.current)
+                            .data("https://image.tmdb.org/t/p/w500${movieData.posterPath}")
+                            .fallback(R.drawable.no_photo)
+                            .crossfade(true)
+                            .build(),
+                        placeholder = painterResource(R.drawable.no_photo),
+                        contentDescription = "",
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier.size(48.dp),
+                    )
 
                     Text(
                         String.format(Locale.getDefault(), "%.1f", movieData.voteAverage),
@@ -101,8 +106,14 @@ fun MovieCardComposable(movieData: MovieData) {
                     .padding(top = 4.dp),
                 horizontalArrangement = Arrangement.End,
             ) {
-                TextButton(onClick = { /*TODO*/ }) {
-                    Text(text = stringResource(R.string.like))
+                TextButton(onClick = {
+                    if (!isFavorite) {
+                        likeButtonCallback()
+                    } else {
+                        dislikeButtonCallback()
+                    }
+                }) {
+                    Text(text = stringResource(if (isFavorite) R.string.dislike else R.string.like))
                 }
 
                 TextButton(onClick = { /*TODO*/ }) {

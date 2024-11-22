@@ -1,5 +1,7 @@
 package com.example.moviestesttask.api
 
+import com.example.moviestesttask.core.ModelMapper
+import com.example.moviestesttask.model.MovieData
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -15,7 +17,7 @@ data class MovieResponseData(
 	@SerialName("backdrop_path")
 	val backdropPath: String?,
 	@SerialName("genre_ids")
-	val genreIds: ArrayList<Int>?,
+	val genreIds: List<Int>?,
 	val id: Int?,
 	@SerialName("original_language")
 	val originalLanguage: String?,
@@ -33,4 +35,44 @@ data class MovieResponseData(
 	val voteAverage: Float?,
 	@SerialName("vote_count")
 	val voteCount: Int?,
-)
+) {
+	companion object: ModelMapper<MovieResponseData, MovieData> {
+		override fun mapTo(model: MovieResponseData): MovieData {
+			return MovieData(
+				adult = model.adult ?: false,
+				backdropPath = model.backdropPath ?: "",
+				genreIds = model.genreIds ?: listOf(),
+				id = model.id ?: -1,
+				originalLanguage = model.originalLanguage ?: "",
+				originalTitle = model.originalTitle ?: "",
+				overview = model.overview ?: "",
+				popularity = model.popularity ?: -1f,
+				posterPath = model.posterPath ?: "",
+				releaseDate = model.releaseDate ?: "",
+				title = model.title ?: "",
+				video = model.video ?: false,
+				voteAverage = model.voteAverage ?: -1f,
+				voteCount = model.voteCount ?: -1,
+			)
+		}
+
+		override fun mapToDomain(model: MovieData): MovieResponseData {
+			return MovieResponseData(
+				adult = model.adult,
+				backdropPath = model.backdropPath,
+				genreIds = model.genreIds,
+				id = model.id,
+				originalLanguage = model.originalLanguage,
+				originalTitle = model.originalTitle,
+				overview = model.overview,
+				popularity = model.popularity,
+				posterPath = model.posterPath,
+				releaseDate = model.releaseDate,
+				title = model.title,
+				video = model.video,
+				voteAverage = model.voteAverage,
+				voteCount = model.voteCount,
+			)
+		}
+	}
+}

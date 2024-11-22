@@ -108,7 +108,13 @@ dependencies {
 
     // Room
     implementation(libs.androidx.room.runtime)
-    annotationProcessor(libs.androidx.room.compiler)
+    kapt(libs.androidx.room.compiler)
+    kapt(libs.compiler)
+    kapt(libs.androidx.lifecycle.common)
+    implementation(libs.androidx.room.ktx)
+
+    // Shimmer
+    implementation(libs.compose.shimmer)
 }
 
 kapt {

@@ -3,6 +3,7 @@
     <string name="all">All</string>
     <string name="favorites">Favorites</string>
     <string name="like">Like</string>
+    <string name="dislike">Dislike</string>
     <string name="share">Share</string>
     <string name="back">Back\n</string>
 </resources>
