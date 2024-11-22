@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -30,6 +31,7 @@ import java.util.Locale
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ScreenAllMovies(
+    lazyListState: LazyListState,
     viewModel: AllMoviesViewModel = hiltViewModel<AllMoviesViewModel>(),
 ) {
 
@@ -47,6 +49,7 @@ fun ScreenAllMovies(
     ) {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
+            state = lazyListState,
         ) {
             // loading state placeholder
             if (response.itemCount == 0 && cachedMovies.itemCount == 0) {

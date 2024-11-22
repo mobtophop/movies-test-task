@@ -3,6 +3,7 @@ package com.example.moviestesttask.presentation.ui.screens.main
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
@@ -23,6 +24,8 @@ import com.example.moviestesttask.presentation.ui.screens.favorites.ScreenFavori
 @Composable
 fun TabScreen() {
     var tabIndex by remember { mutableIntStateOf(0) }
+    val allTabListState = LazyListState()
+    val favoritesTabListState = LazyListState()
 
     val tabs = listOf(stringResource(R.string.all), stringResource(R.string.favorites))
     Scaffold(
@@ -43,8 +46,8 @@ fun TabScreen() {
                         }
                     }
                     when (tabIndex) {
-                        0 -> ScreenAllMovies()
-                        1 -> ScreenFavorites()
+                        0 -> ScreenAllMovies(allTabListState)
+                        1 -> ScreenFavorites(favoritesTabListState)
                     }
                 }
             }
