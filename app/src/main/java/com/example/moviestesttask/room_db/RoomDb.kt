@@ -5,14 +5,14 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.example.moviestesttask.room_db.dao.DaoMovie
+import com.example.moviestesttask.room_db.dao.MoviesDao
 import com.example.moviestesttask.room_db.entities.GenreIdsConverter
 import com.example.moviestesttask.room_db.entities.RoomEntityMovie
 
 @Database(entities = [RoomEntityMovie::class], version = 1, exportSchema = false)
 @TypeConverters(GenreIdsConverter::class)
 abstract class RoomDb : RoomDatabase() {
-	abstract fun moviesDao(): DaoMovie
+	abstract fun moviesDao(): MoviesDao
 
 	companion object {
 		@Volatile

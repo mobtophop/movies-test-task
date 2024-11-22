@@ -115,6 +115,12 @@ dependencies {
 
     // Shimmer
     implementation(libs.compose.shimmer)
+
+    // Test
+    testImplementation(libs.kotlinx.coroutines.test)
+    androidTestImplementation(libs.androidx.room.testing)
+    androidTestImplementation(libs.androidx.junit.v113)
+    androidTestImplementation(libs.androidx.espresso.core.v340)
 }
 
 kapt {

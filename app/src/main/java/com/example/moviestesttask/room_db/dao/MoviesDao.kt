@@ -9,7 +9,7 @@ import com.example.moviestesttask.room_db.entities.RoomEntityMovie
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface DaoMovie {
+interface MoviesDao {
 	@Insert
 	suspend fun insert(movie: RoomEntityMovie)
 
